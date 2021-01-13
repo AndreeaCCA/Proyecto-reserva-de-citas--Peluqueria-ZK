@@ -4,4 +4,4 @@ const picker = datepicker('#date_cita', {formatter: (input, date, instance) => {
     input.value = value 
   }})
 
-/* console.log('hola estoy en index.html') */
+/* console.log('hola') */

@@ -3,6 +3,11 @@ const rtMain = express.Router()
 const bodyParser = require('body-parser')
 const { check, validationResult } = require('express-validator')
 const fs = require('fs')
+const Cita = require('../models/cita')
+const uuidv4 = require("uuid")
+
+//pendiente
+//const nodemailer = require("nodemailer")
 
 
 //esto seria nuestra supuesta base de datos
@@ -11,14 +16,28 @@ arr_data = JSON.parse(fs.readFileSync('cita.json', 'utf-8'))
 
 
 //aqui te creas las rutas get, post, etc.. que necesites
-rtMain.get('/', function (req, res) {
+rtMain.get('/', (req, res) => {
   res.render('home')
   //console.log(req.body)
 })
 
+rtMain.get('/confirmacion', (req, res) => {
+  res.render('respuesta')
+})
+
+rtMain.get('/listado', (req, res) => {
+  res.render('revisarcita')
+
+})
+
+rtMain.get('/anular', (req, res) => {
+  res.render('/anularcita')
+ 
+})
+
 
 rtMain.post(
-  '/user',
+  '/procesar',
   //validation process
   // email must be an email
   check('email').isEmail().withMessage('El formato del email es incorrecto.'),
@@ -40,29 +59,41 @@ rtMain.post(
       console.log(errors)
     }
 
-    const new_cita = req.body
+    let new_cita = {
+      name:      req.body.name,
+      email:     req.body.email,
+      tel:       req.body.tel,
+      date_cita: req.body.date_cita,
+      hour_cita: req.body.hour_cita,
+      id:        uuidv4()
+    }
+
 
     let exists = false
     arr_data.forEach(element => {
-      if (new_cita.date_cita == element.date_cita)
+      if (new_cita.date_cita == element.date_cita && new_cita.hour_cita == element.hour_cita)
         exists = true
     });
 
-    if (exists == false) {
-      let cita = {
-        name: new_cita.name,
-        date_cita: new_cita.date_cita,
-      }
+    if(exists == false) {
       arr_data.push(new_cita)
       fs.writeFileSync('cita.json', JSON.stringify(arr_data), 'utf-8')
-      res.render('respuesta', cita)
-    }else{
-    res.render('error',{fechaOcupada: new_cita.date_cita})
+      res.render('respuesta', new_cita)
+    } 
+    else{
+      res.render('error',new_cita)
     }
   }
 );
 
 
 
+function checkEmail() {
+  return email >= document.getElementById("ageToCheck").value;
+}
+
+function myFunction() {
+  document.getElementById("demo").innerHTML = ages.filter(checkAdult);
+}
 
 module.exports = rtMain
