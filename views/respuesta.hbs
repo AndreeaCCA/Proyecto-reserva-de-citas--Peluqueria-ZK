@@ -1,37 +1,39 @@
-<!-- CUERPO DEL EJERCICIO -->
+<!-- CUERPO DEL PROYECTO -->
 <main class="container">
-    <div class="row">
-        <div class="col-md-8 col-sm-12">
-            <p class="mensaje">¡Hola {{name}}! Te confirmamos la cita del día {{date_cita}} a las {{date_cita}}</p>
-            <p>
-                <i class="fas fa-map-marked-alt"></i> <strong>Dirección:</strong> C/Jorge Luis Borges, 20<br>
-                28806, Alcalá de Henares, Madrid <br><br>
-                <i class="fas fa-phone-volume"></i> <strong>Teléfono:</strong> 663 71 41 21<br>
-                <i class="fab fa-whatsapp-square"></i> <strong>Whatsapp:</strong> 663 71 41 21<br>
-                <i class="fas fa-at"></i> <strong>Email:</strong> info@zkpeluqueria.com<br>
-            </p>
-        </div>
-        <div class="col-md-4 col-sm-12 d-flex resultado justify-content-center align-items-center">
-            <canvas id="canvas"></canvas>
-            <script src="js/qrcode/build/qrcode.min.js"></script>
-            <script>
-                QRCode.toCanvas(document.getElementById('canvas'),
-                    '{{name}} tienes una cita confirmada en dia {{date_cita}}',
-                    function (error) {
-                        if (error) console.error(error)
-                        console.log('success!');
-                    })   
-            </script>
+    <div class="alert alert-success" role="alert" id="confirmacion">
+        <div class="row">
+            <div class="col-md-8 col-sm-8">
+                <p class="mensaje">¡Hola {{name}}! Te confirmamos la cita del día {{date_cita}} a las {{hour_cita}}.</p>
+                <p>
+                    <i class="fas fa-map-marked-alt"></i> <strong>Dirección:</strong> C/Jorge Luis Borges, 20<br>
+                    28806, Alcalá de Henares, Madrid <br><br>
+                    <i class="fas fa-phone-volume"></i> <strong>Teléfono:</strong> 663 71 41 21<br>
+                    <i class="fab fa-whatsapp-square"></i> <strong>Whatsapp:</strong> 663 71 41 21<br>
+                    <i class="fas fa-at"></i> <strong>Email:</strong> info@zkpeluqueria.com<br>
+                </p>
+            </div>
+
+            <div class="col-md-4 col-sm-4 d-flex resultado justify-content-center align-items-center">
+                <canvas id="canvas"></canvas>
+                <script src="js/qrcode/build/qrcode.min.js"></script>
+                <script>
+                    QRCode.toCanvas(document.getElementById('canvas'),
+                        '{{id}}',
+                        function (error) {
+                            if (error) console.error(error)
+                            console.log('success!');
+                        })   
+                </script>
+            </div>
         </div>
     </div>
     <div class="row">
-        <div class= "col-md-12">
+        <div class="col-md-12">
             <iframe
                 src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12136.323992428479!2d-3.3737795!3d40.4955919!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x328f6c99546d9d23!2sZK%20PELUQUERIA!5e0!3m2!1sen!2ses!4v1609958734855!5m2!1sen!2ses"
                 width="100%" height="300px" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
                 tabindex="0"></iframe>
         </div>
     </div>
-    <div>
-    </div>
+
 </main>

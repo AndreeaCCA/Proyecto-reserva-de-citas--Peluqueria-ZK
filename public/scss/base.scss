@@ -7,6 +7,8 @@
 }
 body{
     background-color:#A6B3BB;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+
 }
 
 header {
@@ -63,14 +65,18 @@ footer{
 
 .mensaje{
   font-weight:bold !important;
-  font-size: 1.3em !important;
+  font-size: 1em !important;
 }
 #canvas{
     margin: 20px;
+/*     background-color: #D4EDDA !important;
+ */
 }
 
-
-#hour_cita{ 
+/* #confirmacion{
+    margin-top: 100px;
+} */
+/* #hour_cita{ 
     display: block !important;
     width: 100% !important;
     height: 34px !important;
@@ -87,7 +93,7 @@ footer{
     -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s !important;
     -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s !important;
     transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s !important;
-}
+} */
 
 /* .red{
     background: red;

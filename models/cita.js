@@ -24,10 +24,6 @@ class Cita {
         } else {
             return 'El nombre no debe estar vacío'
         }
-
-
-
-
     } */
 }
 module.exports = Cita

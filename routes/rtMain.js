@@ -3,8 +3,8 @@ const rtMain = express.Router()
 const bodyParser = require('body-parser')
 const { check, validationResult } = require('express-validator')
 const fs = require('fs')
-const Cita = require('../models/cita')
-const uuidv4 = require("uuid")
+const Cita =  require('../models/cita')
+const uuid = require("uuid")
 
 //pendiente
 //const nodemailer = require("nodemailer")
@@ -21,20 +21,33 @@ rtMain.get('/', (req, res) => {
   //console.log(req.body)
 })
 
-rtMain.get('/confirmacion', (req, res) => {
-  res.render('respuesta')
-})
-
 rtMain.get('/listado', (req, res) => {
   res.render('revisarcita')
 
 })
 
 rtMain.get('/anular', (req, res) => {
-  res.render('/anularcita')
+  res.render('anularcita')
+ 
+})
+rtMain.get('/delete', (req, res) => {
+  res.render('anularcita')
+ 
+})
+rtMain.get('/change', (req, res) => {
+  res.render('modificarcita')
  
 })
 
+rtMain.get('/modificar', (req, res) => {
+  res.render('modificarcita')
+ 
+})
+
+rtMain.get('/contact', (req, res) => {
+  res.render('contactanos')
+ 
+})
 
 rtMain.post(
   '/procesar',
@@ -59,13 +72,14 @@ rtMain.post(
       console.log(errors)
     }
 
+
     let new_cita = {
       name:      req.body.name,
       email:     req.body.email,
       tel:       req.body.tel,
       date_cita: req.body.date_cita,
       hour_cita: req.body.hour_cita,
-      id:        uuidv4()
+      id:        uuid.v4()
     }
 
 
@@ -95,5 +109,31 @@ function checkEmail() {
 function myFunction() {
   document.getElementById("demo").innerHTML = ages.filter(checkAdult);
 }
+
+
+
+
+
+
+rtMain.post(
+  '/miscitas',
+  check('email').isEmail().withMessage('El formato del email es incorrecto.'),
+  (req, res) => {
+    console.log('hey')
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+     console.log(errors)
+      return res.render('revisarcita',{errors: errors.array()})
+    }
+
+    let email = req.body.email
+    let miscitas = arr_data.filter(c =>{
+    return c.email== email
+    })
+      console.log(miscitas)
+     res.render('revisarcita',{citas:miscitas}) 
+  })
+
+
 
 module.exports = rtMain
