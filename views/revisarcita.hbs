@@ -6,12 +6,12 @@
       <h3 class="cita">¡Consulta tus citas!</h3>
       <div class="row">
         <div class="col-md-5 col-sm-12 col-xs-12">
-          {{#each errors}}
-          <div class="alert alert-danger" style="color:red" role="alert">
+          {{#each mensajes}}
+          <div class="alert alert-success" style="color:red" role="alert">
             {{msg}}
           </div>
           {{/each}}
-          <form method="post" action="/miscitas">
+          <form method="post" action="/citas/miscitas">
             <div class="form-group">
               <label class="control-label requiredField" for="email">Email: <span class="asteriskField">
                   *</span></label>
@@ -43,9 +43,9 @@
                 <li>Id: {{id}}</li>
               </ul>
               <p>
-                <a method="get" href="/delete" style="color:rgb(46, 44, 44); text-align=" center"><i
+                <a method="get" href="/citas/delete/{{id}}" id="borrar" style="color:rgb(46, 44, 44); text-align:center"><i
                     class="far fa-trash-alt"></i></a> |
-                <a method="get" href="/change" style="color: rgb(46, 44, 44); text-align=" center"><i
+                <a method="get" href="/citas/change/{{id}}" style="color: rgb(46, 44, 44); text-align:center"><i
                     class="far fa-edit"></i></a>
               </p>
             </div>
@@ -57,3 +57,4 @@
     </div>
   </div>
 </main>
+  <script src="/js/delete.js"></script>

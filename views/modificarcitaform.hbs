@@ -3,7 +3,7 @@
   <!-- HTML Form (wrapped in a .bootstrap-iso div) -->
   <div class="bootstrap-iso">
     <div class="container-fluid">
-      <h3 class="cita">¡Reserva tu cita ya!</h3>
+      <h3 class="cita">Modifica tu cita</h3>
       <div class="row">
         <div class="col-md-4 col-sm-6 col-xs-12">
           {{#each errors}}
@@ -11,27 +11,27 @@
             {{msg}}
           </div>
           {{/each}}
-          <form method="post" action="/citas/procesar">
+          <form method="post" action="/citas/modificarcitaform">
             <div class="form-group ">
               <label class="control-label " for="name"> Nombre:</label>
-              <input class="form-control" id="name" name="name" type="text" {{!-- autocomplete="off" --}} {{!-- required
+              <input class="form-control" id="name" name="name" type="text" value="{{cita.name}}" disabled {{!-- autocomplete="off" --}} {{!-- required
                 --}} />
             </div>
             <div class="form-group ">
               <label class="control-label requiredField" for="email">Email: <span class="asteriskField">
                   *</span></label>
-              <input class="form-control" id="email" name="email" type="email" {{!-- autocomplete="off" --}}{{!--
+              <input class="form-control" id="email" name="email" type="email" value="{{cita.email}}" disabled{{!-- autocomplete="off" --}}{{!--
                 required --}} />
             </div>
             <div class="form-group ">
               <label class="control-label " for="tel">Telefono:</label>
-              <input class="form-control" id="tel" name="tel" type="phone" {{!-- autocomplete="off" --}} {{!-- required
+              <input class="form-control" id="tel" name="tel" type="phone" value="{{cita.tel}}" disabled{{!-- autocomplete="off" --}} {{!-- required
                 --}} />
             </div>
             <div class="form-group ">
               <label class="control-label" for="date">Fecha:</label>
               <input class="form-control" id="date_cita" name="date_cita" placeholder="yyyy-mm-dd" type="texto"
-                autocomplete="off" />
+                autocomplete="off" value="{{cita.date_cita}}"/>
               <input class="btn btn-dark" style="color:white;" value="Consultar horario" id="consultar"/>
             </div>
 
@@ -41,6 +41,8 @@
                 autocomplete="off"> --}}
               <select class="" aria-label="Large" name="hour_cita" id="hour_cita" placeholder="hh:mm"
                 style="display:block; width:100%; height: 30%" ; required>
+
+                <option value="{{cita.hour_cita}}">{{cita.hour_cita}}</option>
                 {{!-- <option value="9:00">09:00</option>
                 <option value="10:00">10:00</option>
                 <option value="11:00">11:00</option>
@@ -55,7 +57,7 @@
             </div>
             <div class="form-group">
               <div>
-                <button class="btn btn-dark " name="submit" type="submit" value="Ecriptar mensaje">Solicitar
+                <button class="btn btn-dark " name="submit" type="submit" value="Ecriptar mensaje">Modificar
                   cita</button>
               </div>
             </div>
@@ -80,31 +82,8 @@ margin-top: -10%;"> --}}
 <!-- https://flatpickr.js.org/instance-methods-properties-elements/ -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="/js/home.js"></script>
-
 
 <script>
-    const myInput = document.querySelector("#date_cita");  
-    const fp = flatpickr(myInput, {
-		inline: true,
-		disable: [ "2021-00-06", "2021-01-06", "2021-04-02",
-			function (date) {
-				return (date.getDay() === 0);   
-			},
-		],
-
-    dateFormat: "Y-m-d", 
-		locale: {
-			firstDayOfWeek: 1,
-			weekdays: {
-				shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-				longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-			},
-			months: {
-				shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
-				longhand: ['Enero', 'Febreo', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-			},
-		},
-
-	}); 
+    const myInput = document.querySelector("#date_cita");
+    const fp = flatpickr(myInput, {inline:true});  // flatpickr   
 </script>
