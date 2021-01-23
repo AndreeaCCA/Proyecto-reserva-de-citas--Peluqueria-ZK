@@ -1,0 +1,110 @@
+<!-- CUERPO DEL PROYECTO -->
+<main>
+  <!-- HTML Form (wrapped in a .bootstrap-iso div) -->
+  <div class="bootstrap-iso">
+    <div class="container-fluid">
+      <h3 class="cita">¡Reserva tu cita ya!</h3>
+      <div class="row">
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          {{#each errors}}
+          <div class="alert alert-danger" style="color:red" role="alert">
+            {{msg}}
+          </div>
+          {{/each}}
+          <form method="post" action="/citas/process">
+            <div class="form-group ">
+              <label class="control-label " for="name"> Nombre:</label>
+              <input class="form-control" id="name" name="name" type="text" {{!-- autocomplete="off" --}} {{!-- required
+                --}} />
+            </div>
+            <div class="form-group ">
+              <label class="control-label requiredField" for="email">Email: <span class="asteriskField">
+                  *</span></label>
+              <input class="form-control" id="email" name="email" type="email" {{!-- autocomplete="off" --}}{{!--
+                required --}} />
+            </div>
+            <div class="form-group ">
+              <label class="control-label " for="tel">Telefono:</label>
+              <input class="form-control" id="tel" name="tel" type="phone" {{!-- autocomplete="off" --}} {{!-- required
+                --}} />
+            </div>
+            <div class="form-group ">
+              <label class="control-label" for="date">Fecha:</label>
+              <input class="form-control" id="date_cita" name="date_cita" placeholder="yyyy-mm-dd" type="texto"
+                autocomplete="off" />
+              <input class="btn btn-dark" style="color:white;" value="Consultar horario" id="consultar"/>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label" for="hour">Hora:</label>
+              {{!-- <input class="form-select" " id=" hour_cita" name="hour_cita" placeholder="hh:mm" type="hora"
+                autocomplete="off"> --}}
+              <select class="" aria-label="Large" name="hour_cita" id="hour_cita" placeholder="hh:mm"
+                style="display:block; width:100%; height: 30%" ; required>
+              {{!--   <option value="9:00">09:00</option>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="12:00">12:00</option>
+                <option value="13:00">13:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:00">16:00</option>
+                <option value="17:00">17:00</option>
+                <option value="18:00">18:00</option>
+                <option value="19:00">19:00</option> --}}
+              </select>
+            </div>
+            <div class="form-group">
+              <div>
+                <button class="btn btn-dark " name="submit" type="submit" value="Ecriptar mensaje">Solicitar
+                  cita</button>
+              </div>
+            </div>
+
+          </form>
+          <p><span class="asteriskField">
+              * Campo obligatorio
+            </span>
+          </p>
+        </div>
+        <div class="col-md-8 col-sm-6 col-xs-12" style="text-align: center;">
+          <img src="./images/new.png" alt="haircut" class="img-fluid" style="margin-top:-40px">
+          {{!-- <img src="./images/haircut2.jpg" alt="haircut2" class="img-fluid; img-thumbnail" style="width: 60%;
+margin-top: -10%;"> --}}
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- IMPLEMENTACIÓN DE FLATPICKR -->
+<!-- https://flatpickr.js.org/instance-methods-properties-elements/ -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="/js/appointment.js"></script>
+
+
+<script>
+    const myInput = document.querySelector("#date_cita");  
+    const fp = flatpickr(myInput, {
+		inline: true,
+		disable: [ "2021-01-01", "2021-01-06", "2021-04-02", "2021-05-01", "2021-10-12","2021-11-01", "2021-12-06", "2021-12-08", "2021-12-25",
+			function (date) {
+				return (date.getDay() === 0 );   
+			},
+		],
+
+    dateFormat: "Y-m-d", 
+		locale: {
+			firstDayOfWeek: 1,
+			weekdays: {
+				shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+				longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+			},
+			months: {
+				shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
+				longhand: ['Enero', 'Febreo', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+			},
+		},
+
+	}); 
+</script>

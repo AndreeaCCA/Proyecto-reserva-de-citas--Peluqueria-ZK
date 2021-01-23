@@ -7,7 +7,7 @@ const rtMain = express.Router()
 
 //aqui te creas las rutas get, post, etc.. que necesites
 rtMain.get('/', (req, res) => {
-  res.render('home')
+  res.render('appointment')
   //console.log(req.body)
 })
 
