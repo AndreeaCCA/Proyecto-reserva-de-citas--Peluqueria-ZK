@@ -21,7 +21,7 @@ app.use(express.json())
   
 //enrutador principal
 app.use('/',rtMain)
-app.use('/citas', rtAppointments)
+app.use('/appointment', rtAppointments)
 
 
 //arrancamos el servidor:

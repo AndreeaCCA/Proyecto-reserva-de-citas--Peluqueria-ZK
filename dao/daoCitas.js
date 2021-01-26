@@ -1,27 +1,31 @@
-const Cita = require('../models/cita')
+//const Cita = require('../models/cita')
 const fs = require('fs')
 
 //un objeto daoCitas
-//citas = JSON.parse(fs.readFileSync('cita.json', 'utf-8'))  // convertimos el string en una variable
-
 let daoCitas = {}
 
 
 //funcion para actualizar las horas disònibles
-daoCitas.getCitas = function (date_cita) {            //devuelve todas las citas de todas las personas
+/*
+#########################################
+########## NUEVA CITA   ################
+#########################################
+*/
+//devuelve todas las citas de todas las personas
+daoCitas.getCitas = function (date_cita) {     
     return new Promise((resolve, reject) => {
         fs.readFile('./dao/cita.json', 'utf-8', (err, citas) => {
             citas = JSON.parse(citas)
             //console.log(citas)
-            citas = citas.filter(c => { return c.date_cita == date_cita }) // filtrar citas solo para la fecha eligida, return array of object (cita) // todos los datos de citas
-            citas = citas.map(c => c.hour_cita)  // return solo el hour_cita de todas las citas filtradas, array que incluye solo las horas disponibe
+            // filtrar citas solo para la fecha eligida, return array of object (cita) // todos los datos de citas
+            citas = citas.filter(c => { return c.date_cita == date_cita }) 
+            // return solo el hour_cita de todas las citas filtradas, array que incluye solo las horas disponibe
+            citas = citas.map(c => c.hour_cita) 
             resolve(citas)
         }) // leer todas las citas
 
     })
 }
-
-
 
 daoCitas.createNewCita = function (cita) {                               //una function dentro de un objeto
     return new Promise((resolve, reject) => {
@@ -33,6 +37,11 @@ daoCitas.createNewCita = function (cita) {                               //una f
     })
 }
 
+/*
+#########################################
+########## CONSULTAR CITA   ################
+#########################################
+*/
 
 daoCitas.getCitasByEmail = function (email) {                //devuelve la cita en funcion del email
     return new Promise((resolve, reject) => {
@@ -45,24 +54,13 @@ daoCitas.getCitasByEmail = function (email) {                //devuelve la cita 
         //},2000) 
     })
 }
+/*
+#########################################
+########## ANULAR CITA   ################
+#########################################
+*/
 
-
-
-daoCitas.getCitasById = function (id) {                        //devuelve la cita en funcion del id
-    return new Promise((resolve, reject) => {
-        citas = JSON.parse(fs.readFileSync('./dao/cita.json', 'utf-8'))
-        //setTimeout(()=>{
-        resolve(
-            citas.filter(c => {
-            return c.id == id
-        }))
-        //reject("error")
-        //},2000) 
-    })
-}
-
-
-daoCitas.delete_1Cita = function (id) {
+daoCitas.deleteCita = function (id) {
     return new Promise((resolve, reject) => {
 
         citas = JSON.parse(fs.readFileSync('./dao/cita.json', 'utf-8'))    //
@@ -75,6 +73,24 @@ daoCitas.delete_1Cita = function (id) {
     })
 }
 
+/*
+#########################################
+########## MODIFICAR CITA   ################
+#########################################
+*/
+// funcion que usamos para modificar cita
+daoCitas.getCitasById = function (id) {                        //devuelve la cita en funcion del id
+    return new Promise((resolve, reject) => {
+        citas = JSON.parse(fs.readFileSync('./dao/cita.json', 'utf-8'))
+        //setTimeout(()=>{
+        resolve(
+            citas.filter(c => {
+            return c.id == id
+        }))
+        //reject("error")
+        //},2000) 
+    })
+}
 daoCitas.modifyCita = function (id, date_cita, hour_cita) {
     return new Promise((resolve, reject) => {
 
@@ -95,19 +111,6 @@ daoCitas.modifyCita = function (id, date_cita, hour_cita) {
     })
 }
 
-
-
-
-
-
-/* aoCitas.getCita=function(id){                  //devuelve la cita en funcion del id 
-    return new Promise((resolve,reject)=>{  
-        //setTimeout(()=>{
-            resolve(citas.find(cita=>cita.id==id))
-            reject("error")
-       // },2000) 
-    })
-} */
 
 
 

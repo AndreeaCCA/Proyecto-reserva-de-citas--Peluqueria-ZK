@@ -11,7 +11,7 @@
             {{msg}}
           </div>
           {{/each}}
-          <form method="post" action="/citas/verify">
+          <form method="post" action="/appointment/verify">
             <div class="form-group">
               <label class="control-label requiredField" for="email">Email: <span class="asteriskField">
                   *</span></label>
@@ -43,9 +43,9 @@
                 <li>Id: {{id}}</li>
               </ul>
               <p>
-              {{!--   <a method="get" href="/delete_1/{{id}}" style="color:rgb(46, 44, 44); text-align:center"><i
+              {{!--   <a href="/delete_1/{{id}}" style="color:rgb(46, 44, 44); text-align:center"><i
                     class="far fa-trash-alt"></i></a> | --}}
-                <a method="get" href="/citas/change_1/{{id}}" style="color: rgb(46, 44, 44); text-align:center"><i
+                <a  href="/appointment/change_1/{{id}}" style="color: rgb(46, 44, 44); text-align:center"><i
                     class="far fa-edit"></i></a>
               </p>
             </div>

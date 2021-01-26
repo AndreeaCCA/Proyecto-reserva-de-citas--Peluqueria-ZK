@@ -11,27 +11,27 @@
             {{msg}}
           </div>
           {{/each}}
-          <form method="post" action="/citas/process">
+          <form method="post" action="/appointment/process">
             <div class="form-group ">
               <label class="control-label " for="name"> Nombre:</label>
-              <input class="form-control" id="name" name="name" type="text" {{!-- autocomplete="off" --}} {{!-- required
+              <input class="form-control" id="name" name="name" type="text" value="{{cita.name}}"{{!-- autocomplete="off" --}} {{!-- required
                 --}} />
             </div>
             <div class="form-group ">
               <label class="control-label requiredField" for="email">Email: <span class="asteriskField">
                   *</span></label>
-              <input class="form-control" id="email" name="email" type="email" {{!-- autocomplete="off" --}}{{!--
+              <input class="form-control" id="email" name="email" type="email" value="{{cita.email}}" {{!-- autocomplete="off" --}}{{!--
                 required --}} />
             </div>
             <div class="form-group ">
               <label class="control-label " for="tel">Telefono:</label>
-              <input class="form-control" id="tel" name="tel" type="phone" {{!-- autocomplete="off" --}} {{!-- required
+              <input class="form-control" id="tel" name="tel" type="phone" value="{{cita.tel}}"{{!-- autocomplete="off" --}} {{!-- required
                 --}} />
             </div>
             <div class="form-group ">
               <label class="control-label" for="date">Fecha:</label>
               <input class="form-control" id="date_cita" name="date_cita" placeholder="yyyy-mm-dd" type="texto"
-                autocomplete="off" />
+                autocomplete="off" value="{{cita.date_cita}}"/>
               <input class="btn btn-dark" style="color:white;" value="Consultar horario" id="consultar"/>
             </div>
 
@@ -83,28 +83,3 @@ margin-top: -10%;"> --}}
   <script src="/js/appointment.js"></script>
 
 
-<script>
-    const myInput = document.querySelector("#date_cita");  
-    const fp = flatpickr(myInput, {
-		inline: true,
-		disable: [ "2021-01-01", "2021-01-06", "2021-04-02", "2021-05-01", "2021-10-12","2021-11-01", "2021-12-06", "2021-12-08", "2021-12-25",
-			function (date) {
-				return (date.getDay() === 0 );   
-			},
-		],
-
-    dateFormat: "Y-m-d", 
-		locale: {
-			firstDayOfWeek: 1,
-			weekdays: {
-				shorthand: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-				longhand: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-			},
-			months: {
-				shorthand: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Оct', 'Nov', 'Dic'],
-				longhand: ['Enero', 'Febreo', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-			},
-		},
-
-	}); 
-</script>

@@ -7,68 +7,21 @@ const uuid = require("uuid")
 const daoCitas = require('../dao/daoCitas')
 const rtCita = require('../models/cita')
 
-//esto seria nuestra supuesta base de datos
-let arr_data = []
-arr_data = JSON.parse(fs.readFileSync('./dao/cita.json', 'utf-8'))
-
 
 //aqui te creas las rutas get, post, etc.. que necesites
 
-rtAppointments.get('/review', (req, res) => {
-    res.render('review')
-
-})
-
-rtAppointments.get('/cancel', (req, res) => {
-    res.render('cancel')
-
-})
-
-rtAppointments.get('/delete_1/:id', (req, res) => {
-
-    let id = req.params.id
-    daoCitas.delete_1Cita(id)
-        .then((mensaje) => {
-            res.render('cancel', { 'mensaje': mensaje })
-        })
-
-})
-
-
-rtAppointments.get('/change_1/:id', (req, res) => {
-    let id = req.params.id;
-    daoCitas.getCitasById(id)
-        .then(cita => {
-            console.log(cita)
-            res.render('modifyForm', { 'cita': cita[0] })
+/*
+#########################################
+########## NUEVA CITA   ################
+#########################################
+*/
+rtAppointments.get('/consultar/:date', (req, res) => {   
+    let date = req.params.date
+    daoCitas.getCitas(date)
+        .then(hours_reserved => {
+            res.json(hours_reserved)
         })
 })
-rtAppointments.post('/file', (req, res) => {
-    console.log('modifyAppointment datos cita')
-
-    console.log(req.body)
-    let date_cita = req.body.date_cita
-    let hour_cita = req.body.hour_cita
-    let id = req.body.id_cita
-    daoCitas.modifyCita(id, date_cita, hour_cita)
-        .then(cita => {
-            console.log(cita)
-            res.render('confirmationModify', cita)
-        })
-})
-
-
-
-rtAppointments.get('/modifyAppointment', (req, res) => {
-    res.render('modifyAppointment')
-
-})
-
-rtAppointments.get('/contact', (req, res) => {
-    res.render('contact')
-
-})
-
 
 rtAppointments.post(
     '/process',
@@ -83,18 +36,6 @@ rtAppointments.post(
     check('date_cita').isDate().withMessage('El formato de fecha es incorrecto.'),
     check('date_cita').isAfter().withMessage('Porfavor elige una fecha futura.'),
     (req, res) => {
-
-        // finds the validation errors in this request and wraps them in an object with handy functions
-        // validationResult - returns: a Result object
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            //return res.status(400).json({ errors: errors.array() });
-            return res.render('process', { errors: errors.array() })
-
-            console.log(errors)
-        }
-
-
         let new_cita = {
             name: req.body.name,
             email: req.body.email,
@@ -103,15 +44,34 @@ rtAppointments.post(
             hour_cita: req.body.hour_cita,
             id: uuid.v4()
         }
+        // finds the validation errors in this request and wraps them in an object with handy functions
+        // validationResult - returns: a Result object
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            //return res.status(400).json({ errors: errors.array() });
+
+            return res.render('appointment', { errors: errors.array(), cita:new_cita })
+
+            console.log(errors)
+        }
 
         daoCitas.createNewCita(new_cita)
             .then((cita) => {
                 console.log('yoooo')
                 res.render('confirmationAppointment', cita)
             })
-
     })
 
+
+
+/*
+#########################################
+########## CONSULTAR CITA   ################
+#########################################
+*/
+rtAppointments.get('/review', (req, res) => {
+    res.render('review')
+})
 
 rtAppointments.post(
     '/review',
@@ -132,7 +92,15 @@ rtAppointments.post(
             })
     })
 
+/*
+#########################################
+########## ANULAR CITA   ################
+#########################################
+*/
 
+rtAppointments.get('/cancel', (req, res) => {
+    res.render('cancel')
+})
 
 rtAppointments.post(
     '/cancel',
@@ -154,6 +122,26 @@ rtAppointments.post(
 
     })
 
+rtAppointments.get('/delete_1/:id', (req, res) => {
+    let id = req.params.id
+    daoCitas.deleteCita(id)
+        .then((mensaje) => {
+            res.render('cancel', { 'mensaje': mensaje })
+        })
+})
+
+
+
+/*
+#########################################
+########## MODIFICAR CITA   ################
+#########################################
+*/
+
+rtAppointments.get('/modifyAppointment', (req, res) => {
+    res.render('modifyAppointment')
+})
+
 rtAppointments.post(
     '/verify',
     check('email').isEmail().withMessage('El formato del email es incorrecto.'),
@@ -172,11 +160,39 @@ rtAppointments.post(
             })
     })
 
-rtAppointments.get('/consultar/:date', (req, res) => {   //
-    let date = req.params.date
-    daoCitas.getCitas(date)
-        .then(citas => {
-            res.json(citas)
+rtAppointments.get('/change_1/:id', (req, res) => {
+    let id = req.params.id;
+    daoCitas.getCitasById(id)
+        .then(cita => {
+            console.log(cita)
+            res.render('modifyForm', { 'cita': cita[0] })
         })
 })
+
+rtAppointments.post('/file', (req, res) => {
+    console.log('modifyAppointment datos cita')
+    console.log(req.body)
+    let date_cita = req.body.date_cita
+    let hour_cita = req.body.hour_cita
+    let id = req.body.id_cita
+    daoCitas.modifyCita(id, date_cita, hour_cita)
+        .then(cita => {
+            console.log(cita)
+            res.render('confirmationModify', cita)
+        })
+})
+
+
+
+
+/*
+#########################################
+########## CONTACTO   ################
+#########################################
+*/
+rtAppointments.get('/contact', (req, res) => {
+    res.render('contact')
+})
+
+
 module.exports = rtAppointments
